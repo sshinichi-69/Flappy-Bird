@@ -64,6 +64,7 @@ namespace FlappyBird.UI
         {
             startImg.GetComponent<RectTransform>().localScale = Screen.width / 2f / startImg.texture.width * Vector3.one;
 
+            pauseBtn.GetComponent<RectTransform>().anchoredPosition = Screen.width / 10f * new Vector2(1, -1);
             pauseBtn.GetComponent<RectTransform>().localScale = Screen.width / 10f / pauseBtn.GetComponent<Image>().sprite.rect.width * Vector2.one;
         }
     }
