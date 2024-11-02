@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace FlappyBird.UI
 {
-    public class PlayUi : MonoBehaviour
+    public class PlayUi : UiElement
     {
         [SerializeField] private RawImage startImg;
         [SerializeField] private NumberText scoreText;
@@ -58,6 +58,13 @@ namespace FlappyBird.UI
         public void Pause()
         {
             GameManager.Instance.SwitchToPausingState();
+        }
+
+        protected override void ResponsiveUi()
+        {
+            startImg.GetComponent<RectTransform>().localScale = Screen.width / 2f / startImg.texture.width * Vector3.one;
+
+            pauseBtn.GetComponent<RectTransform>().localScale = Screen.width / 10f / pauseBtn.GetComponent<Image>().sprite.rect.width * Vector2.one;
         }
     }
 }

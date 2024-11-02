@@ -269,7 +269,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -870,6 +878,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigation: {fileID: 872389830}
   highScore: {fileID: 1726659102}
+  title: {fileID: 2020830672}
+  startBtn: {fileID: 1289249132}
+  scoreBtn: {fileID: 1261429439}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,7 +1608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2237,6 +2248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 303006912}
   highScoreText: {fileID: 1514589523}
+  title: {fileID: 1944232636}
+  result: {fileID: 1132676180}
+  okBtn: {fileID: 438259212}
 --- !u!1 &1944232634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,7 +2263,7 @@ GameObject:
   - component: {fileID: 1944232637}
   - component: {fileID: 1944232636}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2448,6 +2462,14 @@ PrefabInstance:
     - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4417411444697398461, guid: ec0129dd6f346c145a729e9dfb4ed81c, type: 3}
       propertyPath: m_LocalPosition.x

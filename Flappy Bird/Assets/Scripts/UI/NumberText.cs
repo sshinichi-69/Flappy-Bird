@@ -92,10 +92,10 @@ namespace FlappyBird.UI
             {
                 return;
             }
-
+            
             Vector2 halfSize = GetComponent<RectTransform>().sizeDelta / 2;
             Vector2 halfTextSize = GetTextSize() / 2;
-
+            
             switch (alignment)
             {
                 case TextAnchor.UpperLeft:

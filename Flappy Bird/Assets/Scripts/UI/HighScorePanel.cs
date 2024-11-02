@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace FlappyBird.UI
 {
-    public class HighScorePanel : MonoBehaviour
+    public class HighScorePanel : UiElement
     {
         [SerializeField] private NumberText text;
 
@@ -22,6 +22,12 @@ namespace FlappyBird.UI
                 }
             }
             text.SetValue(textStr);
+        }
+
+        protected override void ResponsiveUi()
+        {
+            text.GetComponent<RectTransform>().anchoredPosition = Screen.height / 27f * Vector2.down;
+            text.GetComponent<RectTransform>().sizeDelta = Screen.width / 2.5f * Vector2.one;
         }
     }
 }
