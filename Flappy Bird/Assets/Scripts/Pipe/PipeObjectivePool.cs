@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,11 +12,6 @@ namespace FlappyBird.InGame
         private void Awake()
         {
             pipePairPool = new ObjectPool<PipePair>(CreatePipePair, OnGetFromPool, OnReleaseFromPool, null, true, 3);
-        }
-
-        private void Update()
-        {
-            //Debug.Log(pipePairPool.CountAll);
         }
 
         public PipePair InstantiatePipePair()

@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace FlappyBird.UI
 {
-    public class UiManager : MonoBehaviour
+    public class UiManager : ElementManager
     {
         private static UiManager instance;
 
@@ -21,18 +18,18 @@ namespace FlappyBird.UI
             }
         }
 
-        public void OnStartGame()
+        public override void OnStartGame()
         {
             menu.gameObject.SetActive(false);
             play.OnStartGame();
         }
 
-        public void OnPlayGame()
+        public override void OnPlayGame()
         {
             play.OnPlayGame();
         }
 
-        public void OnEndGame()
+        public override void OnEndGame()
         {
             int score = GameManager.Instance.Score;
             play.OnEndGame();
@@ -41,30 +38,30 @@ namespace FlappyBird.UI
             gameOverPanel.SetHighScore(GameManager.Instance.HighScore.GetHighestScore());
         }
 
-        public void OnBackToMenu()
+        public override void OnBackToMenu()
         {
             gameOverPanel.gameObject.SetActive(false);
             menu.gameObject.SetActive(true);
         }
 
-        public void OnPlayDemo()
+        public override void OnPlayDemo()
         {
             menu.gameObject.SetActive(false);
             play.OnPlayDemo();
         }
 
-        public void OnEndDemo()
+        public override void OnEndDemo()
         {
             menu.gameObject.SetActive(true);
             play.OnEndDemo();
         }
 
-        public void OnPauseGame()
+        public override void OnPauseGame()
         {
             play.OnPauseGame();
         }
 
-        public void OnResumeGame()
+        public override void OnResumeGame()
         {
             play.OnResumeGame();
         }

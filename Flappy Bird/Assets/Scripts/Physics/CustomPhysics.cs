@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlappyBird.Physics
@@ -8,8 +6,6 @@ namespace FlappyBird.Physics
     {
         public static bool IsRectangleIntersect(Rect a, Rect b)
         {
-            Tool.DrawRect(a, new Color(1, 1, 0, 1));
-            Tool.DrawRect(b, Color.red);
             return IsLineIntersect(a.xMin, a.xMax, b.xMin, b.xMax) && IsLineIntersect(a.yMin, a.yMax, b.yMin, b.yMax);
         }
 

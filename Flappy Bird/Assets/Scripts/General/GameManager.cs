@@ -1,9 +1,8 @@
 using FlappyBird.Data;
+using FlappyBird.GameState;
 using FlappyBird.InGame;
 using FlappyBird.UI;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FlappyBird
@@ -13,13 +12,11 @@ namespace FlappyBird
         private static GameManager instance;
 
         [SerializeField] private Field field;
-        [SerializeField] private Player player;
-        [SerializeField] private Bot bot;
 
         private readonly float waitToDemoTime = 5f;
 
-        private GameState gameState;
-        private Bird currentBird;
+        private List<ElementManager> elementManagers;
+        private GameState.GameState gameState;
         private float currentWaitToDemoTime = 0f;
         private int score = 0;
         private HighScore highScore;
@@ -28,8 +25,7 @@ namespace FlappyBird
 
         private void Awake()
         {
-            gameState = GameState.MENU;
-            currentBird = player;
+            gameState = new MenuState();
 
             LoadData();
 
@@ -41,143 +37,47 @@ namespace FlappyBird
             }
         }
 
+        private void Start()
+        {
+            elementManagers = new List<ElementManager>();
+            elementManagers.Add(BirdManager.Instance);
+            elementManagers.Add(PipeManager.Instance);
+            elementManagers.Add(UiManager.Instance);
+        }
+
         void Update()
         {
-            switch (gameState)
-            {
-                case GameState.MENU:
-                    if (UiManager.Instance.IsOnNavigationScreen())
-                    {
-                        if (Tool.IsScreenPressed())
-                        {
-                            currentWaitToDemoTime = 0f;
-                        }
-                        else
-                        {
-                            currentWaitToDemoTime += Time.deltaTime;
-                            if (currentWaitToDemoTime >= waitToDemoTime)
-                            {
-                                currentWaitToDemoTime = 0f;
-                                SwitchToPlayingDemoState();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        currentWaitToDemoTime = 0f;
-                    }
-                    break;
-                case GameState.STARTING:
-                    if (Tool.IsScreenPressed())
-                    {
-                        SwitchToPlayingGameState();
-                    }
-                    break;
-                case GameState.PLAYING_GAME:
-                    CheckAddingScore();
-                    break;
-                case GameState.PLAYING_DEMO:
-                    CheckAddingScore();
-                    if (Tool.IsScreenPressed())
-                    {
-                        SwitchToMenuState();
-                    }
-                    break;
-                case GameState.PAUSING:
-                    if (Tool.IsScreenPressed())
-                    {
-                        SwitchToPlayingGameState();
-                    }
-                    break;
-            }
+            gameState.Update();
         }
 
-        public void SwitchToStartingState()
+        public void ChangeState(GameState.GameState state)
         {
-            if (gameState == GameState.MENU)
-            {
-                gameState = GameState.STARTING;
-                currentBird.gameObject.SetActive(true);
-                UiManager.Instance.OnStartGame();
-            }
+            gameState = state;
         }
 
-        public void SwitchToPlayingGameState()
+        public void StartGame()
         {
-            if (gameState == GameState.STARTING)
-            {
-                gameState = GameState.PLAYING_GAME;
-                currentBird.OnPlayGame();
-                PipeManager.Instance.OnPlayGame();
-                UiManager.Instance.OnPlayGame();
-            }
-            else
-            {
-                gameState = GameState.PLAYING_GAME;
-                Time.timeScale = 1;
-                UiManager.Instance.OnResumeGame();
-            }
+            gameState.SwitchToStartingState();
         }
 
-        public void SwitchToPlayingDemoState()
+        public void Pause()
         {
-            if (gameState == GameState.MENU)
-            {
-                gameState = GameState.PLAYING_DEMO;
-                currentBird = bot;
-                currentBird.gameObject.SetActive(true);
-                currentBird.OnPlayGame();
-                UiManager.Instance.OnPlayDemo();
-                PipeManager.Instance.OnPlayGame();
-            }
+            gameState.SwitchToPausingState();
         }
 
-        public void SwitchToPausingState()
+        public void EndGame()
         {
-            if (gameState == GameState.PLAYING_GAME)
-            {
-                gameState = GameState.PAUSING;
-                Time.timeScale = 0;
-                UiManager.Instance.OnPauseGame();
-            }
+            gameState.SwitchToEndingState();
         }
 
-        public void SwitchToEndingState()
+        public void BackToMenu()
         {
-            if (gameState == GameState.PLAYING_GAME)
-            {
-                gameState = GameState.ENDING;
-                HighScore.SetNewScore(score);
-                currentBird.OnEndGame();
-                UiManager.Instance.OnEndGame();
-                SaveData();
-            }
-        }
-
-        public void SwitchToMenuState()
-        {
-            if (gameState == GameState.ENDING || gameState == GameState.PLAYING_DEMO)
-            {
-                score = 0;
-                currentBird.OnBackToMenu();
-                currentBird.gameObject.SetActive(false);
-                PipeManager.Instance.OnBackToMenu();
-                if (gameState == GameState.ENDING)
-                {
-                    UiManager.Instance.OnBackToMenu();
-                }
-                else if (gameState == GameState.PLAYING_DEMO)
-                {
-                    currentBird = player;
-                    UiManager.Instance.OnEndDemo();
-                }
-                gameState = GameState.MENU;
-            }
+            gameState.SwitchToMenuState();
         }
 
         public bool IsPlayingState()
         {
-            return gameState == GameState.PLAYING_GAME || gameState == GameState.PLAYING_DEMO;
+            return GameStateType == GameStateType.PLAYING_GAME || GameStateType == GameStateType.PLAYING_DEMO;
         }
 
         public void AddScore()
@@ -187,10 +87,25 @@ namespace FlappyBird
             audioSource.Play();
         }
 
-        void CheckAddingScore()
+        public void ResetCurrentWaitToDemoTime()
+        {
+            currentWaitToDemoTime = 0f;
+        }
+
+        public void CountNextCurrentWaitToDemoTime()
+        {
+            currentWaitToDemoTime += Time.deltaTime;
+            if (currentWaitToDemoTime >= waitToDemoTime)
+            {
+                currentWaitToDemoTime = 0f;
+                gameState.SwitchToPlayingDemoState();
+            }
+        }
+
+        public void CheckAddingScore()
         {
             float xCheckingPipePos = PipeManager.Instance.GetXFirstPipeObjectivePos();
-            float xPlayerPos = currentBird.GetXPos();
+            float xPlayerPos = BirdManager.Instance.GetXPos();
             if (xPlayerPos > xCheckingPipePos)
             {
                 AddScore();
@@ -198,21 +113,43 @@ namespace FlappyBird
             }
         }
 
-        void LoadData()
+        public void SetNewScore()
+        {
+            highScore.SetNewScore(score);
+        }
+
+        public void ResetScore()
+        {
+            score = 0;
+        }
+
+        public void LoadData()
         {
             SaveData data = SaveSystem.Load();
             highScore = new HighScore(data.HighScores);
         }
 
-        void SaveData()
+        public void SaveData()
         {
             SaveSystem.Save();
         }
 
         public Field Field { get { return field; } }
-        public GameState GameState { get { return gameState; } }
+        public List<ElementManager> ElementManagers { get { return elementManagers; } }
         public HighScore HighScore { get { return highScore; } }
         public int Score { get { return score; } }
+
+        public GameStateType GameStateType
+        {
+            get
+            {
+                if (gameState == null)
+                {
+                    return GameStateType.PAUSING;
+                }
+                return gameState.GameStateType;
+            }
+        }
 
         public static GameManager Instance
         {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +7,7 @@ namespace FlappyBird.UI
     {
         [SerializeField] private GameObject navigation;
         [SerializeField] private HighScorePanel highScore;
+        [SerializeField] private Text demoText;
 
         [SerializeField] private RawImage title;
         [SerializeField] private Button startBtn;
@@ -24,12 +23,13 @@ namespace FlappyBird.UI
 
         public void OnStartBtnPressed()
         {
-            GameManager.Instance.SwitchToStartingState();
+            GameManager.Instance.StartGame();
         }
 
         public void OnScoreBtnPressed()
         {
             navigation.SetActive(false);
+            demoText.gameObject.SetActive(false);
             highScore.gameObject.SetActive(true);
         }
 
@@ -39,6 +39,7 @@ namespace FlappyBird.UI
             {
                 highScore.gameObject.SetActive(false);
                 navigation.SetActive(true);
+                demoText.gameObject.SetActive(true);
             }
         }
 
@@ -57,6 +58,8 @@ namespace FlappyBird.UI
 
             scoreBtn.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width / 5f, -Screen.height / 4f);
             scoreBtn.GetComponent<RectTransform>().localScale = Screen.width / 4f / startBtn.GetComponent<Image>().sprite.rect.width * Vector3.one;
+
+            demoText.fontSize = (int)(Screen.width / 1080f * 64);
         }
     }
 }

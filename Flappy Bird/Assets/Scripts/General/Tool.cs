@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -43,7 +42,7 @@ namespace FlappyBird
             return new Vector2(Mathf.Abs(v.x), Mathf.Abs(v.y));
         }
 
-        public static void DrawRect(Rect rect, Color color)
+        public static void DebugDrawRect(Rect rect, Color color)
         {
             Debug.DrawLine(rect.min, rect.min + Vector2.right * rect.width, color);
             Debug.DrawLine(rect.min, rect.min + Vector2.up * rect.height, color);

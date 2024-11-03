@@ -1,11 +1,10 @@
 using FlappyBird.Physics;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlappyBird.InGame
 {
-    public class PipeManager : MonoBehaviour
+    public class PipeManager : ElementManager
     {
         private static PipeManager instance;
 
@@ -64,12 +63,28 @@ namespace FlappyBird.InGame
             pipeObjectives.RemoveAt(idx);
         }
 
-        public void OnPlayGame()
+        public override void OnStartGame() { }
+
+        public override void OnPlayGame()
         {
             GeneratePipe();
         }
 
-        public void OnBackToMenu()
+        public override void OnPlayDemo()
+        {
+            GeneratePipe();
+        }
+
+        public override void OnEndDemo()
+        {
+            OnBackToMenu();
+        }
+
+        public override void OnPauseGame() { }
+        public override void OnResumeGame() { }
+        public override void OnEndGame() { }
+
+        public override void OnBackToMenu()
         {
             pipeObjectives.Clear();
             for (int i = pipeContainer.transform.childCount - 1; i >= 0; i--)
@@ -99,7 +114,7 @@ namespace FlappyBird.InGame
                     GeneratePipe,
                     () => GameManager.Instance.IsPlayingState(),
                     4f,
-                    () => GameManager.Instance.GameState == GameState.PAUSING);
+                    () => GameManager.Instance.GameStateType == GameStateType.PAUSING);
             }
         }
 

@@ -33,7 +33,6 @@ namespace FlappyBird.InGame
         private void ActWithPipePair(List<Rect> pipeObjectiveRects)
         {
             float yMinToAlive = (pipeObjectiveRects[0].yMin + pipeObjectiveRects[1].yMax) / 2 - jumpHeight / 2;
-            //Debug.Log($"{transform.position.y} <= {yMinToAlive} <---> {pipeObjectiveRects[1].yMax}");
             if (transform.position.y <= yMinToAlive)
             {
                 Jump();
@@ -50,7 +49,7 @@ namespace FlappyBird.InGame
 
         protected override void EndGame()
         {
-            GameManager.Instance.SwitchToMenuState();
+            GameManager.Instance.BackToMenu();
         }
     }
 }

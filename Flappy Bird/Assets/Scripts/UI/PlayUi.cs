@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +8,7 @@ namespace FlappyBird.UI
         [SerializeField] private RawImage startImg;
         [SerializeField] private NumberText scoreText;
         [SerializeField] private Button pauseBtn;
+        [SerializeField] private Text demoText;
 
         public void OnStartGame()
         {
@@ -33,11 +32,13 @@ namespace FlappyBird.UI
         {
             scoreText.gameObject.SetActive(true);
             scoreText.SetValue(0);
+            demoText.gameObject.SetActive(true);
         }
 
         public void OnEndDemo()
         {
             scoreText.gameObject.SetActive(false);
+            demoText.gameObject.SetActive(false);
         }
 
         public void OnPauseGame()
@@ -57,7 +58,7 @@ namespace FlappyBird.UI
 
         public void Pause()
         {
-            GameManager.Instance.SwitchToPausingState();
+            GameManager.Instance.Pause();
         }
 
         protected override void ResponsiveUi()
@@ -66,6 +67,8 @@ namespace FlappyBird.UI
 
             pauseBtn.GetComponent<RectTransform>().anchoredPosition = Screen.width / 10f * new Vector2(1, -1);
             pauseBtn.GetComponent<RectTransform>().localScale = Screen.width / 10f / pauseBtn.GetComponent<Image>().sprite.rect.width * Vector2.one;
+
+            demoText.fontSize = (int)(Screen.width / 1080f * 64);
         }
     }
 }

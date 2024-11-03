@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FlappyBird.UI {
+namespace FlappyBird.UI
+{
     public class GameOverPanel : UiElement
     {
         [SerializeField] private NumberText scoreText;
@@ -25,7 +24,7 @@ namespace FlappyBird.UI {
 
         public void RestartGame()
         {
-            GameManager.Instance.SwitchToMenuState();
+            GameManager.Instance.BackToMenu();
         }
 
         protected override void ResponsiveUi()

@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace FlappyBird
 {
-    public enum GameState
+    public enum GameStateType
     {
         MENU,
         STARTING,

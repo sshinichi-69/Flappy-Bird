@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FlappyBird.InGame
@@ -35,7 +33,7 @@ namespace FlappyBird.InGame
         protected void FixedUpdate()
         {
             GameManager gm = GameManager.Instance;
-            if (gm.IsPlayingState() || gm.GameState == GameState.ENDING)
+            if (gm.IsPlayingState() || gm.GameStateType == GameStateType.ENDING)
             {
                 Fall();
                 if (gm.IsPlayingState())
@@ -107,7 +105,7 @@ namespace FlappyBird.InGame
             if (isAlive)
             {
                 isAlive = false;
-                GameManager.Instance.SwitchToEndingState();
+                GameManager.Instance.EndGame();
                 StartCoroutine(PlayDieSound());
             }
         }
