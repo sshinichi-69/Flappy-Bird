@@ -6,13 +6,15 @@ namespace FlappyBird.InGame
 {
     public class Bot : Bird
     {
-        public override void OnPlayGame()
+        private void Update()
         {
-            base.OnPlayGame();
-            StartCoroutine(EnterInput());
+            if (GameManager.Instance.IsPlayingState())
+            {
+                EnterInput();
+            }
         }
 
-        private IEnumerator EnterInput()
+        private void EnterInput()
         {
             List<Rect> pipeObjectiveRects = PipeManager.Instance.GetFirstPipeObjectiveRect();
             if (pipeObjectiveRects != null && pipeObjectiveRects.Count == 2)
@@ -22,11 +24,6 @@ namespace FlappyBird.InGame
             else
             {
                 ActWithNothing();
-            }
-            yield return new WaitForSeconds(1 / 30f);
-            if (GameManager.Instance.IsPlayingState())
-            {
-                StartCoroutine(EnterInput());
             }
         }
 

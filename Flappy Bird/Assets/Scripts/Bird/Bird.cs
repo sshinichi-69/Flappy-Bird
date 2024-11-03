@@ -43,7 +43,7 @@ namespace FlappyBird.InGame
             }
         }
 
-        public virtual void OnPlayGame()
+        public void OnPlayGame()
         {
             Jump();
         }

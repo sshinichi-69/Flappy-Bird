@@ -13,10 +13,7 @@ namespace FlappyBird.InGame
                 {
                     if (Input.touches[0].phase == TouchPhase.Began)
                     {
-                        if (GameManager.Instance.IsPlayingState())
-                        {
-                            Jump();
-                        }
+                        Jump();
                     }
                 }
             }
