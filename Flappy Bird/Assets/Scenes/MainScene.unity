@@ -1044,7 +1044,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DEMO IS PLAYING...
+  m_Text: PLAYING DEMO...
 --- !u!222 &700602063
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1767,7 +1767,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DEMO WILL PLAY AFTER A BIT
+  m_Text: DEMO WILL BE PLAYED AFTER A BIT
 --- !u!222 &1513949542
 CanvasRenderer:
   m_ObjectHideFlags: 0
